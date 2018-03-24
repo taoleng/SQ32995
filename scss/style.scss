@@ -1,0 +1,228 @@
+@function rem($px) {
+    @if $px == 0 {
+        @return 0;
+    }
+    @if $px <=2 and $px > 0 {
+        @return 1px;
+    }
+    @else {
+        @return $px / ($px * 0 + 1) / 40 * 1rem;
+    }
+}
+
+@function randomFloat($min, $max) {
+    @return $min + random() * ($max - $min);
+}
+
+
+
+body,html{width: 100%;height:100%;font-family:Microsoft YaHei;}
+.wrapper{width: rem(750);height: 100%;position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.wrapper .wrapper_link { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.wrapper .wrapper_link img { width: 15rem; height: 15rem; }
+.wrapper_sixyear_hidden{display: none;}
+.wrapper_sixyear{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 6;
+    .wrapper_sixyear_slogin{width: 100%;height: 100%;}
+}
+.wrapper_sixyear_time{
+    position: absolute; 
+    width: 100%;   
+    height: rem(200);
+    text-align: center;
+    z-index:8;
+    top:40%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size:rem(200);
+    color: #fff;
+    font-weight: Microsoft YaHei;
+}
+.wrapper_red_envelope{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    display:none;
+}
+.wrapper_red_envelope_bg{
+    width: 100%;height: 100%;
+    overflow: hidden;
+    background: #191818;
+    opacity: 0.85;
+    position: relative;
+    top: 0;z-index:6;
+    p{
+        position: absolute;
+        left:100%;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease;
+        i{ 
+            display: block;
+            background: url(../images/light.png) no-repeat; 
+            background-size: rem(207) rem(42);
+            transform: rotateZ(-45deg);
+            height:2px;
+         }
+        %l1{ width:rem(84);background: #fff;}
+        %l2{ width:rem(84);background-position:0 rem(-13);}
+        %l3{ width:rem(164);background-position:0 rem(-26);}
+        %l4{ width:rem(206);background-position:0 rem(-39);}
+        %l5{ width:rem(130);background-position:0 0;}
+    } 
+       @for $i from 1 through 25 {
+            $l: random();
+            $lt: random();
+            p:nth-child(#{$i}) {
+                        $bottom:(150px,350px);
+                        top: randomFloat(-40%,100%);
+                        $ad: randomFloat(3s, 6s);
+                        $ade: randomFloat(3s, 8s);
+                        animation-duration:$ad;
+                        animation-delay: -$ade;
+                        animation-name: ani;
+                i {
+                    @if $l > 0.75 {
+                        @extend %l1;
+                    } @else if $l > 0.5 {
+                        @extend %l2;
+                    } @else if $l > 0.25{
+                        @extend %l3;
+                    } @else if $l > 0.15{
+                        @extend %l4;
+                    } @else {
+                         @extend %l5;
+                    }
+                }
+                 @keyframes ani{
+                    0%{transform: translate(0,0);}
+                    100%{transform: translate(-1000px,500px)}
+                }
+            }
+        }
+}
+
+
+.wrapper_red_envelope_mod{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 12;
+    display: none;
+    .wrem_wrap{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+         p{
+            width: rem(160);
+            height: rem(160);
+            position: absolute;
+            z-index: 100;
+            left:100%;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease;
+            i{ 
+                display: block;
+                background: url(../images/red_envelope.png) no-repeat; 
+                background-size: rem(449) rem(418);
+             }
+            %i1{ width:rem(134); height: rem(144); background-position: 0 0;}
+            %i2{ width:rem(160); height: rem(145); background-position:0 rem(-273);}
+            %i3{ width:rem(158); height: rem(164); background-position: rem(-291) 0;}
+        }
+        @for $i from 1 through 35 {
+            $ran: random();
+            $ran2: random();
+            p:nth-child(#{$i}) {
+                        $top:randomFloat(-150px,350px);
+//                      top: $i*3%;
+//                      top: random() * 100%;
+                        top: randomFloat(-30%,100%);
+                        $ad: randomFloat(6s,10s);
+                        animation-duration:$ad;
+                        animation-delay:#{-$ran2*30}s;
+//                      animation-delay: #{($i)*$ran2}s;
+                        animation-name: ani-left;
+                i {
+                    @if $ran > 0.6 {
+                        @extend %i1;
+                    } @else if $ran > 0.3 {
+                        @extend %i2;
+                    } @else {
+                        @extend %i3;
+                    }
+                }
+                 @keyframes ani-left{
+                    0%{transform: translate(0,0);}
+                    100%{transform: translate(-650px,350px)}
+                }
+            }
+        }
+    }
+   
+}
+.wrapper_get{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 70;
+    display: none;
+    animation: scale 0.5s;
+    @keyframes scale{
+        0%{transform: scale(0.6);}
+        100%{transform: scale(1);}
+    }
+}
+.wrapper_get_wrap{
+    width: rem(750);
+    height: rem(800);
+    background: url(../images/lq.png) no-repeat;
+    background-size:rem(750) rem(800);
+    z-index: 60;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    .wrapper_get_wrap_inner{
+        padding-top:rem(246);
+        width:rem(400);
+        transform: rotateZ(-4deg);
+        margin-left: rem(166);
+    }
+    .wgwi_name{
+        font-size: rem(30px);
+        color: #fd839b;
+    }
+    .wgwi_info{
+        font-size: rem(44px);
+        color: #ee395c;
+        font-weight: bold;
+    }
+    .wrapper_get_wrap_lq{
+        width: rem(367);
+        height: rem(137);
+        margin:rem(135) auto 0;
+        .wgwl_get{
+            width: rem(367);
+            height: rem(137);
+            display: inline-block;
+            background: url(../images/btn.png) no-repeat;
+            background-size:rem(367) rem(137);
+            text-indent: -99.99rem;
+        }
+    }
+}
